@@ -5,28 +5,28 @@
 namespace itertools{
 
 	template <class R,class S> class Chain{
-		
+
 		private:
 			R iter1;
 			S iter2;
-			
+
 			template <typename T1,typename T2> class iterator{
-				public:				
+				public:
 					T1 first;
 					T2 second;
 					bool stillInFirst;
-					
+
 					iterator(T1 A, T2 B):first(A),second(B),stillInFirst(true){}//constructor
-					
+
 					//operator *
-					decltype(*first) operator*() const{
-						if(stillInFirst)
+					auto operator*() const{
+						if(stillInFirst){
 							return *first;
-						else 
-							return *second;				
-	
+						}else{
+							return *second;
+						}
 					}
-					//operator ++						
+					//operator ++
 					iterator<T1,T2>& operator++(){
 						if(stillInFirst)
 							++first;
@@ -34,7 +34,7 @@ namespace itertools{
 							++second;
 						return *this;
 					}
-					//operator !=						
+					//operator !=
 					bool operator!=(const iterator<T1,T2>& next){
 						if(!(first!=next.first) && stillInFirst)
 							stillInFirst=false;
@@ -43,22 +43,22 @@ namespace itertools{
 						else
 							return second!=next.second;
 					}
-										
+
 			};
-		public: 
+		public:
 			Chain(R from,S to): iter1(from), iter2(to){}
-			
-			auto begin(){
+
+			auto begin() const{
 				typedef decltype(iter1.begin()) T1;
 				typedef decltype(iter2.begin()) T2;
 				return iterator<T1,T2> {iter1.begin(),iter2.begin()};
 			}
-			auto end() {
+			auto end() const{
 				typedef decltype(iter1.end()) T1;
 				typedef decltype(iter2.end()) T2;
 				return iterator<T1,T2> {iter1.end(),iter2.end()};
 			}
 	};
 	template <typename X,typename Y> Chain<X,Y> chain(X varX, Y varY){return Chain(varX,varY);}
-	
+
 }
