@@ -1,7 +1,11 @@
 #pragma once
+#include <utility>
+#include <assert.h>
 #include <iostream>
 
 namespace itertools{
+
+	bool emptyProduct=false;
 
 	template <typename R,typename S> class product{
 		private:
@@ -13,31 +17,41 @@ namespace itertools{
 				T1 first;
 				T2 second;
 				T2 tempOfSecond;//save the position of "second" iterator
-				
-				iterator(T1 A,T2 B): first(A), second(B), tempOfSecond(B){}
+				bool ans;
+
+				iterator(T1 A,T2 B): first(A), second(B), tempOfSecond(second),ans(false){}
 
 				//operator *
-				std::pair<decltype(*first),decltype(*second)> operator*() const{
+				auto operator*() const{
 					return std::pair<decltype(*first),decltype(*second)> (*first,*second);
 				}
 				//operator ++
-				iterator<T1,T2>& operator++(){
-					++second;
+				iterator& operator++(){
+					if(!ans)
+						++second;
 					return *this;
 				}
-				//operator != 
-				bool operator!= (iterator<T1,T2> next){
+				//operator !=
+				bool operator!= (iterator const & next){
 				//if iterator "first" is bigger then iterator "second" (in length), start "second" from the beginning
 					if((first!=next.first) && !(second!=next.second)){
+						ans=true;
+					}
+					if(ans){
 						second=tempOfSecond;
 						++first;
+						ans=false;
 					}
-					return (first!=next.first);
+					return (first!=next.first&&(!emptyProduct));
 				}
-				
+
 		};
 		public:
-			product(R start,S end): iter1(start), iter2(end){}
+			product(R start,S end): iter1(start), iter2(end){
+				emptyProduct=false;
+				if(!(end.begin()!=end.end()))
+					emptyProduct=true;
+			}
 
 			auto begin() const{
 				return iterator<decltype(iter1.begin()),decltype(iter2.begin())> (iter1.begin(),iter2.begin());
@@ -46,6 +60,6 @@ namespace itertools{
 				return iterator<decltype(iter1.end()),decltype(iter2.end())> (iter1.end(),iter2.end());
 			}
 	};
-	
+
 
 }
