@@ -3,7 +3,7 @@
 
 namespace itertools{
 
-	template <typename R,typename S> class Product{
+	template <typename R,typename S> class product{
 		private:
 			R iter1;
 			S iter2;
@@ -37,7 +37,7 @@ namespace itertools{
 				
 		};
 		public:
-			Product(R start,S end): iter1(start), iter2(end){}
+			product(R start,S end): iter1(start), iter2(end){}
 
 			auto begin() const{
 				return iterator<decltype(iter1.begin()),decltype(iter2.begin())> (iter1.begin(),iter2.begin());
@@ -47,9 +47,5 @@ namespace itertools{
 			}
 	};
 	
-	template <typename T1,typename T2> Product<T1,T2> product(T1 A,T2 B){
-		return Product<T1,T2>(A,B);		
-	}
-
 
 }
