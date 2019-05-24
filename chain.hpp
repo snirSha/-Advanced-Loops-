@@ -4,7 +4,7 @@
 
 namespace itertools{
 
-	template <class R,class S> class Chain{
+	template <class R,class S> class chain{
 
 		private:
 			R iter1;
@@ -46,7 +46,7 @@ namespace itertools{
 
 			};
 		public:
-			Chain(R from,S to): iter1(from), iter2(to){}
+			chain(R from,S to): iter1(from), iter2(to){}
 
 			auto begin() const{
 				typedef decltype(iter1.begin()) T1;
@@ -59,6 +59,6 @@ namespace itertools{
 				return iterator<T1,T2> {iter1.end(),iter2.end()};
 			}
 	};
-	template <typename X,typename Y> Chain<X,Y> chain(X varX, Y varY){return Chain(varX,varY);}
+
 
 }
