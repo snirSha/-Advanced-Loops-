@@ -5,7 +5,7 @@
 using namespace std;
 namespace itertools{
 
-	template <class T> class Range {
+	template <class T> class range {
 		private:
     			T p_begin;
     			T p_end;
@@ -17,24 +17,24 @@ namespace itertools{
     				public:
         				iterator(T x) : variable(x) { }
 
-        		                Range::iterator &operator++(){
+        		                range::iterator &operator++(){
              				   ++variable;
              				   return *this;
             				}
 
         				const T& operator*() const { return variable; }
 
-        				bool operator!=(Range::iterator const &next) const {
+        				bool operator!=(range::iterator const &next) const {
             				return variable != next.variable;
         				}
     			};
 
 
 		public:
-    			Range::iterator begin() const { return Range::iterator(p_begin); }
-    			Range::iterator end()   const { return Range::iterator(p_end  ); }
+    			auto begin() const { return range::iterator(p_begin); }
+    			auto end()   const { return range::iterator(p_end  ); }
 
-    			Range(T range_begin, T range_end)
+    			range(T range_begin, T range_end)
         		: p_begin(range_begin), p_end(range_end)
         		{}
 
@@ -45,8 +45,6 @@ namespace itertools{
 				return s;
 			}
 	};
-	template<typename T> Range<T> range(T A,T B){
-		return Range<T>(A,B);
-	} 
+
 
 }
