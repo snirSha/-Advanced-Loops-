@@ -17,12 +17,12 @@ namespace itertools{
     				public:
         				iterator(T x) : variable(x) { }
 
-        		                range::iterator &operator++(){
+        		    range::iterator &operator++(){
              				   ++variable;
              				   return *this;
-            				}
+            		}
 
-        				const T& operator*() const { return variable; }
+        				auto operator*() const { return variable; }
 
         				bool operator!=(range::iterator const &next) const {
             				return variable != next.variable;
@@ -38,12 +38,12 @@ namespace itertools{
         		: p_begin(range_begin), p_end(range_end)
         		{}
 
-			string toString(){
+	/*		string toString(){
 				string s="";
 				for(auto i:*this)
 					s+=to_string(i)+" ";
 				return s;
-			}
+			}*/
 	};
 
 
